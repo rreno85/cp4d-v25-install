@@ -1,0 +1,20 @@
+---
+# This playbook updates the kernal parms for the work nodes to support CP4D Services like Db2, WKC, and Watson Studio
+
+- hosts: all
+  remote_user: root
+  tasks:
+  - name: add kernel parm for Watson Studio Local
+    sysctl:
+      name: vm.max_map_count
+      value: '262144'
+      sysctl_set: yes
+      state: present
+      reload: yes
+  - name: add kernel parm for Watson Knowledge Catalog
+    sysctl:
+      name: kernel.sem
+      value: '250 1024000 32 4096'
+      sysctl_set: yes
+      state: present
+      reload: yes
